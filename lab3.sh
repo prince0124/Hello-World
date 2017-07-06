@@ -23,7 +23,8 @@ checkPrereq()
     echo "Checking prerequisites ..."
     verifyCommand 'cf -v'
     verifyCommand 'uaac -v'
-    checkVersion 'node -v'
+    nodeVersion 'node -v'
+    npmVersion  'npm -v'
     echo ""
   }||
   {
@@ -43,7 +44,7 @@ echo "Starting Testing Labs"
 }
 
 echoP() {
-echo %errorlevel%
+echo $errorlevel
 exit 0
 }
 # Verifies a given command exisitance
@@ -63,13 +64,23 @@ verifyCommand()
   fi
 
 }
-checkVersion(){
+nodeVersion(){
 x=$($1)
-if(x eq 'v7.10.0')
+if [ "$x" == 'v7.10.0' ]
 then 
-  echo Node Version Okay
+  echo "Node Version Okay"
 else
-  echo Error
+  echoP
+fi
+}
+
+npmVersion(){
+x=$($1)
+if [ "$x" == '4.2.0' ]
+then 
+  echo "npm Version Okay"
+else
+  echoP
 fi
 }
 
